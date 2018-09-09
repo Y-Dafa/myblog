@@ -1,0 +1,20 @@
+doctype html
+html
+    head
+        title=title
+        meta(charset="utf-8")
+        meta(name="author",content="dafa")
+        link(rel="stylesheet", href="/layui/css/layui.css")
+        link(rel="stylesheet", href="/css/nav.css")
+        block css
+
+        script(src="/layui/layui.js")
+    body
+        //- nav
+        include ./nav.pug
+        //- content
+        block contents
+        //- footer
+        include ./fooer.pug
+        //- script
+        block scripts
