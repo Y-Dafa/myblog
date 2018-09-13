@@ -1,6 +1,6 @@
 extends ./layout/layout
- block css
-    link(rel="stylesheet", href="/css/index..css")
+block css
+    link(rel="stylesheet", href="/css/index.css")
 //-
     artList
     头像
@@ -17,24 +17,24 @@ block contents
             //-文章列表
             .layui-col-md8
                 ul.article-list
-                    //- li index.html
-                    //- li 这是 pug 渲染出来的首页
-                    each info in artList
-                        li 
-                            a.list-face
-                                img(src="info.author.avater", alt="info.author")
-                            h2
-                                a.layui-badge=info.this
-                                a.articlt-title.ellipsis(href=`a/article/${info._id}`)=info.title
-                            .liat-info
-                                a=info.author.username
-                                span=info.created.toLocaleString()
-                                sapn=list-reply
-                                    i(title="评论").layui-icon-file-b
-                                    =info.commentNum
+                    li index.html
+                    li 这是 pug 渲染出来的首页
+                    //- each info in artList
+                    //-     li 
+                    //-         a.list-face
+                    //-             img(src="info.author.avater", alt="info.author")
+                    //-         h2
+                    //-             a.layui-badge=info.this
+                    //-             a.articlt-title.ellipsis(href=`a/article/${info._id}`)=info.title
+                    //-         .liat-info
+                    //-             a=info.author.username
+                    //-             span=info.created.toLocaleString()
+                    //-             sapn=list-reply
+                    //-                 i(title="评论").layui-icon-file-b
+                    //-                 =info.commentNum
                 include ./layout/laypage.pug
             //-右侧公告
             include ./layout/right_tag
 
 block scripts
-    script(src="/js/index.js")                         
+    script(src="/js/index.js")             
