@@ -5,8 +5,8 @@ const encrypt=require("../util/encrypt")
 //通过db 对象创建操作user数据库的模型对象
 const User=db.model("users",UserSchema)
 
-//导出用户注册
 /*
+    导出用户注册
     用户注册时：
       1.去数据库user先查询当前发过来的username是否存在
 */

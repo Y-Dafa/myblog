@@ -56,39 +56,10 @@ block contents
                                         .layui-input-block
                                             input(type="text", name="title" required="", lay-verify="required" autocomplete="off")#L_title.layui-input
                                 .layui-form-item.layui-form-text
-                                    textarea(style="display: none;")#article-content   
+                                    textarea(style="display: none;")
+                                    #article-content   
                     .layui-form-item
                         button(lay-filter="send" lay-submit).layui-btn 立即发布
 
 block scripts
-    script.
-        layui.use(['form','layedit','element'],function(){
-            const form=layui.form;
-            const layedit=layui.layedit;
-            const $=layui.$
-
-            const index=layedit.build("article-content",{
-                hideTool:[
-                    'image' //插入图片
-                ]
-            });//建立编辑器
-
-            form.on("submit(send)",(res)=>{
-                const {tips,title}=res.field
-                if(layedit.getText(index).trim().length === 0)return layer.alert("请输入内容")
-                const data={
-                    tips,
-                    title,
-                    content:layedit.getContent(index)
-                }
-                $.post("/article",data,(msg)=>{
-                    if(msg.status){
-                        layer.alert('发表成功',(res)=>{
-                            location.href="/"
-                        })
-                    }else{
-                        layer.alert(`发表失败，失败信息：${msg.msg}`)
-                    }
-                })
-            })
-        });
+    script(src="/js/add-article.js") 

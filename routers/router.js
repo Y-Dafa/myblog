@@ -1,6 +1,8 @@
 const Router = require('koa-router')
 //拿到操作user集合的逻辑对象
 const user=require("../control/user")
+//拿到操作article集合的逻辑对象
+const article=require("../control/article")
 
 const router = new Router
 
@@ -28,18 +30,23 @@ router.post("/user/login", user.login)
 //用户退出
 router.get("/user/logout", user.logout)
 
-//动态路由:id处理登录，注册，退出
-/*
-router.get("/user/:id", async(ctx) => {
-    // ctx.params = { //params为一个对象，里面的属性为动态id
-    //     id:"/login"
-    // }
-    ctx.body=ctx.params.id
-})
-*/
+//文章发表的页面
+router.get("/article",user.keepLog, article.addPage)
+
+//文章添加路由
+router.post("/article",user.keepLog, article.add)
 
 module.exports = router
+
 /*
+    动态路由:id处理登录，注册，退出
+    router.get("/user/:id", async(ctx) => {
+        // ctx.params = { //params为一个对象，里面的属性为动态id
+        //     id:"/login"
+        // }
+        ctx.body=ctx.params.id
+    })
+
     对用户的动作： /user
     登录    /user/login
     注册    /user/reg
