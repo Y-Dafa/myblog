@@ -104,7 +104,8 @@ exports.login = async ctx => {
 
         ctx.session={
             username,
-            uid:data[0]._id
+            uid:data[0]._id,
+            avatar:data[0].avatar,
         }
         //登陆成功
         await ctx.render("isOk",{
@@ -118,7 +119,7 @@ exports.login = async ctx => {
     })
 }
 
-//确定用户的状态，以及保持用户状态
+//确定用户的状态，以及保持用户状态session
 exports.keepLog=async (ctx, next) => {
     if(ctx.session.isNew){ //session没有为true,没有登录
         if(ctx.cookies.get("userrname")){ //cookies存在
