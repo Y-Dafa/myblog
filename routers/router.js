@@ -26,13 +26,16 @@ router.post("/user/login", user.login)
 router.get("/user/logout", user.logout)
 
 //文章发表的页面
-router.get("/article",user.keepLog, article.addPage)
+router.get("/article", user.keepLog, article.addPage)
 
 //文章添加路由
-router.post("/article",user.keepLog, article.add)
+router.post("/article", user.keepLog, article.add)
 
 //文章分页路由,默认查找第一页
-router.get("/page/:id",article.getList)
+router.get("/page/:id", article.getList)
+
+//文章详情页 路由
+router.get("/article/:id", user.keepLog, article.details)
 
 module.exports = router
 

@@ -5,12 +5,10 @@ layui.use(["element", "laypage"], () => {
   
   element.tabDelete('demo', 'xxx')
  
-
-
   laypage.render({
     elem: "laypage",
     count: $("#laypage").data("maxnum"),
-    limit: 2,
+    limit: 3,
     groups: 3,
     curr: location.pathname.replace("/page/", ""),
     jump(obj, f){

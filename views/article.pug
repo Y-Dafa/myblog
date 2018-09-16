@@ -28,33 +28,33 @@ block contents
                         .other-info.text-center
                             span=article.author.username
                             span &nbsp;&nbsp;发表于
-                            span=article.created.toLocalString()
+                            span=article.created.toLocaleString()
                             span &nbsp;分类
                             span=article.tips
                         //- 文章内容
                         div(style='padding:10px;').article-detail!=article.content
                     //- 评论
-                    .comment.default-box
-                        fieldset.text-center
-                            legend 评论
-                        .txt
-                            <textarea id="comment-txt"></textarea>
-                            button.layui-btn 回复
-                        ul.comment-list
-                            //- li
-                            //- img(src="/img/1.jpg")
-                            //- div
-                            //-     p.author comment.username
-                            //-     p.time 2018-08-29 13:19:13
-                            //- .she-said
-                            //-     这是评论内容
-                            each info in comment
-                                li 
-                                    img(src=info.from.avater)
-                                    div
-                                        p.author= info.from.username
-                                        p.time= info.created.toLocaleString()    
-                                    .she-said!= info.content
+                    //- .comment.default-box
+                    //-     fieldset.text-center
+                    //-         legend 评论
+                    //-     .txt
+                    //-         <textarea id="comment-txt"></textarea>
+                    //-         button.layui-btn 回复
+                    //-     ul.comment-list
+                    //-         //- li
+                    //-         //- img(src="/img/1.jpg")
+                    //-         //- div
+                    //-         //-     p.author comment.username
+                    //-         //-     p.time 2018-08-29 13:19:13
+                    //-         //- .she-said
+                    //-         //-     这是评论内容
+                    //-         each info in comment
+                    //-             li 
+                    //-                 img(src=info.reviewer.avater)
+                    //-                 div
+                    //-                     p.author= info.reviewer.username
+                    //-                     p.time= info.created.toLocaleString()    
+                    //-                 .she-said!= info.content
                 //- 右侧公告
                 include ./layout/right_tag
 
