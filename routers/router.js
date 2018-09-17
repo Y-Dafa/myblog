@@ -1,8 +1,8 @@
 const Router = require('koa-router')
-//拿到操作user集合的逻辑对象
+//拿到操作user、article、comment集合的逻辑对象
 const user=require("../control/user")
-//拿到操作article集合的逻辑对象
 const article=require("../control/article")
+const comment=require("../control/comment")
 
 const router = new Router
 
@@ -36,6 +36,9 @@ router.get("/page/:id", article.getList)
 
 //文章详情页 路由
 router.get("/article/:id", user.keepLog, article.details)
+
+//发表评论 路由
+router.post("/comment", user.keepLog, comment.addComment)
 
 module.exports = router
 

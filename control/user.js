@@ -28,7 +28,9 @@ exports.reg = async ctx => {
             //用户名不存在 需要存到数据库,存到数据库之前需要先加密,encrypt是自定义的加密模块
             const _user=new User({
                 username,
-                password:encrypt(password)
+                password:encrypt(password),
+                articleNum:0,
+                commentNum:0,
             })
             _user.save((err,data) => {
                 if(err){  //保存过程中可能出错

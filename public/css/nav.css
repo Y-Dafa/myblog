@@ -70,7 +70,6 @@ body {
 }
 
 /*超出显示省略号*/
-
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;
@@ -87,15 +86,7 @@ body {
   font-size: 0;
 }
 
-
-/* 右导航 */
-.layui-col-space15 .layui-col-md4{
-  margin-top: -7.5px;
-}
-
-
-/*底部*/
-
+/* 底部 */
 #blog-footer {
   margin: 50px 0 0;
   padding: 20px 0 30px;

@@ -51,3 +51,34 @@ app.listen(3001,() => {
 })
 
 //创建管理员用户 如果管理员用户已存在则返回
+{
+    const {db} = require("./Schema/config")
+    const UserSchema = require("./Schema/user")
+    const User = db.model("users",UserSchema)
+    const encrypt = require("./util/encrypt")
+   
+    User
+        .find({username:"admin"})
+        .then(data => {
+            if(data.length === 0){
+                //管理员不存在需创建
+                new User({
+                    username: "admin",
+                    password:encrypt("admin"),
+                    role:1996,
+                    articleNum:0,
+                    commentNum:0,
+                })
+                .save()
+                .then(data => {
+                    console.log("管理员用户名->admin，密码->admin")
+                })
+                .catch(err => {
+                    console.log("管理员账号检查失败")
+                })
+            }else{
+                //管理员存在
+                console.log("管理员用户名->admin，密码->admin")
+            }
+        })
+}

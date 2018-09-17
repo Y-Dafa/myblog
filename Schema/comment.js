@@ -3,6 +3,7 @@ const {Schema} = require("./config")
 const ObjectId=Schema.Types.ObjectId
 
 const CommentSchema = new Schema({
+    content:String,
     reviewer:{  //评论者关联users的表
         type:ObjectId,
         ref:"users"

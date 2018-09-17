@@ -1,11 +1,15 @@
 const {db} = require("../Schema/config")
+
+//通过db对象创建操作article数据库的模型对象
 const ArticleSchema = require("../Schema/article")
+const Article = db.model("articles",ArticleSchema)
+
 //获取用户的Schema为了拿到操作users集合的实例对象
 const UserSchema = require("../Schema/user")
 const User = db.model("users",UserSchema)
 
-//通过db对象创建操作article数据库的模型对象
-const Article = db.model("articles",ArticleSchema)
+const CommentSchema = require("../Schema/comment")
+const Comment = db.model("comments", CommentSchema)
 
 //返回文章发表页
 exports.addPage = async (ctx) => {
@@ -28,10 +32,16 @@ exports.add = async ctx => {
     const data = ctx.request.body
     //添加文章作者
     data.author = ctx.session.uid
+    data.commentNum = 0 //设置评论计数器初值为0
 
     await new Promise((resolve,reject) => {
         new Article(data).save((err,data) => {
             if(err) return(err)
+            //更新用户文章计数
+            User.update({_id:data.author},{$inc:{articleNum:1}},err => {
+                if(err) return console.log(err)
+            })
+
             resolve(data)
         })
     })
@@ -91,9 +101,19 @@ exports.details = async ctx => {
         .populate("author","username")
         .then(data => data)
     
+    //查找与当前文章关联的所有评论
+    const comment = await Comment
+        .find({article:_id})
+        .sort("-created")
+        .populate("reviewer", "username avatar")
+        .then(data => data)
+        .catch(err => {console.log(err)})
+
     await ctx.render("article",{
         title:article.title,
         article,
+        comment,
         session:ctx.session
     })
+
 }
