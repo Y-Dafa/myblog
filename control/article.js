@@ -41,7 +41,6 @@ exports.add = async ctx => {
             User.update({_id:data.author},{$inc:{articleNum:1}},err => {
                 if(err) return console.log(err)
             })
-
             resolve(data)
         })
     })

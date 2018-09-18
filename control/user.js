@@ -46,7 +46,7 @@ exports.reg = async ctx => {
         if(data){
             //注册成功
             await ctx.render("isOk",{
-                status:"注册成功！"
+                status:"注册成功"
             })
         }else{
             //用户名已存在
@@ -108,10 +108,11 @@ exports.login = async ctx => {
             username,
             uid:data[0]._id,
             avatar:data[0].avatar,
+            role:data[0].role,
         }
         //登陆成功
         await ctx.render("isOk",{
-            status:"登录成功！"
+            status:"登录成功"
         })
     })
     .catch(async err => {
@@ -122,7 +123,7 @@ exports.login = async ctx => {
 }
 
 //确定用户的状态，以及保持用户状态session
-exports.keepLog=async (ctx, next) => {
+exports.keepLog = async (ctx, next) => {
     if(ctx.session.isNew){ //session没有为true,没有登录
         if(ctx.cookies.get("userrname")){ //cookies存在
             ctx.session={
@@ -135,7 +136,7 @@ exports.keepLog=async (ctx, next) => {
 }
 
 //用户退出的中间件
-exports.logout=async ctx => {
+exports.logout = async ctx => {
     ctx.session = null
     ctx.cookies.set("username",null,{
         maxAge:0
@@ -145,4 +146,25 @@ exports.logout=async ctx => {
     })
     //在后台做重定向到根
     ctx.redirect("/")
+}
+
+//用户头像上传
+exports.upload = async ctx => {
+    const filename = ctx.req.file.filename
+    let data = {}
+    //更新用户头像
+    await User.update({_id: ctx.session.uid}, {$set: {avatar: "/avatar/" + filename}}, (err, res) => {
+        if(err){
+            data = {
+                status:0,
+                message:"上传失败"
+            }
+        }else{
+            data = {
+                status:1,
+                message:"上传成功"
+            }
+        }
+    })
+    ctx.body = data
 }

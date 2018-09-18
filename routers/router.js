@@ -1,9 +1,12 @@
 const Router = require('koa-router')
 //拿到操作user、article、comment集合的逻辑对象
-const user=require("../control/user")
-const article=require("../control/article")
-const comment=require("../control/comment")
+const user = require("../control/user")
+const article = require("../control/article")
+const comment = require("../control/comment")
+const admin = require("../control/admin")
+const upload = require("../util/upload")
 
+//实例化Router
 const router = new Router
 
 //设计主页
@@ -39,6 +42,19 @@ router.get("/article/:id", user.keepLog, article.details)
 
 //发表评论 路由
 router.post("/comment", user.keepLog, comment.addComment)
+
+//admin后台页面 动态路由绑定（用户，文章，评论，头像）
+router.get("/admin/:id", user.keepLog, admin.index)
+
+//当以上路由为正确获取是跳转到404页面
+router.get("*",async ctx => {
+    await ctx.render("404", {
+        title:"404",
+    })
+})
+
+//头像上传
+router.post("/upload", user.keepLog, upload.single('file'), user.upload)
 
 module.exports = router
 
