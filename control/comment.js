@@ -1,13 +1,6 @@
-const { db } = require("../Schema/config")
-
-const ArticleSchema = require("../Schema/article")
-const Article = db.model("articles", ArticleSchema)
-
-const UserSchema = require("../Schema/user")
-const User = db.model("users", UserSchema)
-
-const CommentSchema = require("../Schema/comment")
-const Comment = db.model("comments", CommentSchema)
+const User = require("../models/user")
+const Article = require("../models/article")
+const Comment = require("../models/comment")
 
 //扩展当前登录评论者的id
 //保存评论
@@ -50,4 +43,39 @@ exports.addComment = async ctx => {
             }
         })
     ctx.body = message
+}
+
+//后台：查询用户所有评论
+exports.commentList = async ctx => {
+    const uid = ctx.session.uid
+    const data = await Comment.find({reviewer:uid}).populate("article","title")
+    console.log(data)
+
+    //返回数据
+    ctx.body = {
+        code: 0,
+        count:data.length,//确定表格数据行数
+        data
+    }
+}
+
+//后台删除对应id的评论
+exports.del = async ctx => {
+    //获取评论id
+    const commentId = ctx.params.id
+    
+    let res = {
+        state: 1,
+        message: "删除成功"
+    }
+
+    await Comment.findById(commentId)
+        .then(data => data.remove())
+        .catch(err => {
+            res = {
+                state: 0,
+                message: err
+            }
+        })
+    ctx.body = res
 }

@@ -1,9 +1,8 @@
-const {db}=require("../Schema/config")
-const UserSchema=require("../Schema/user")
-const encrypt=require("../util/encrypt")
+const User = require("../models/user")
+const Article = require("../models/article")
+const Comment = require("../models/comment")
 
-//通过db 对象创建操作user数据库的模型对象
-const User=db.model("users",UserSchema)
+const encrypt=require("../util/encrypt")
 
 /*
     导出用户注册
@@ -124,11 +123,15 @@ exports.login = async ctx => {
 
 //确定用户的状态，以及保持用户状态session
 exports.keepLog = async (ctx, next) => {
-    if(ctx.session.isNew){ //session没有为true,没有登录
+    if(ctx.session.isNew){ //session没有 为true,没有登录
         if(ctx.cookies.get("userrname")){ //cookies存在
+            let uid = ctx.cookies.get("uid")
+            const avatar = await User.findById(uid)
+                .then(data => data.avatar)
             ctx.session={
                 username:ctx.cookies.get("username"),
                 uid,
+                avatar,
             }
         }
     }

@@ -1,5 +1,3 @@
-
-
 layui.use(['layedit', 'layer', 'element'], function(){
   const $ = layui.$
   const layedit = layui.layedit;

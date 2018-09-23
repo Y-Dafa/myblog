@@ -1,13 +1,6 @@
-const { db } = require("../Schema/config")
-
-const ArticleSchema = require("../Schema/article")
-const Article = db.model("articles", ArticleSchema)
-
-const UserSchema = require("../Schema/user")
-const User = db.model("users", UserSchema)
-
-const CommentSchema = require("../Schema/comment")
-const Comment = db.model("comments", CommentSchema)
+const User = require("../models/user")
+const Article = require("../models/article")
+const Comment = require("../models/comment")
 
 const fs = require("fs")
 const {join} = require("path")

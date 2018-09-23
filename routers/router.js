@@ -46,15 +46,26 @@ router.post("/comment", user.keepLog, comment.addComment)
 //admin后台页面 动态路由绑定（用户，文章，评论，头像）
 router.get("/admin/:id", user.keepLog, admin.index)
 
+//头像上传
+router.post("/upload", user.keepLog, upload.single('file'), user.upload)
+
+//获取后台用户所有评论
+router.get("/user/comments", user.keepLog, comment.commentList)
+
+//后台 删除用户评论
+router.del("/comment/:id", user.keepLog, comment.del)
+
+//获取后台用户所有文章
+router.get("/user/articles", user.keepLog, article.artList)
+//后台 删除用户文章
+router.del("/article/:id", user.keepLog, article.del)
+
 //当以上路由为正确获取是跳转到404页面
 router.get("*",async ctx => {
     await ctx.render("404", {
         title:"404",
     })
 })
-
-//头像上传
-router.post("/upload", user.keepLog, upload.single('file'), user.upload)
 
 module.exports = router
 
